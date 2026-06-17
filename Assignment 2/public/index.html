@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>QR Attendance</title>
+<style>
+body{
+font-family:Arial;
+max-width:600px;
+margin:auto;
+padding:40px;
+}
+button{
+padding:10px;
+}
+</style>
+</head>
+<body>
+
+<h1>QR Attendance System</h1>
+
+<input type="file" id="file">
+
+<button onclick="upload()">
+Scan Attendance
+</button>
+
+<pre id="result"></pre>
+
+<script>
+
+async function upload(){
+
+const file =
+document.getElementById("file").files[0];
+
+const fd = new FormData();
+
+fd.append("image",file);
+
+const res =
+await fetch("/scan",{
+method:"POST",
+body:fd
+});
+
+const data = await res.json();
+
+document.getElementById("result")
+.innerText =
+JSON.stringify(data,null,2);
+
+}
+
+</script>
+
+</body>
+</html>
